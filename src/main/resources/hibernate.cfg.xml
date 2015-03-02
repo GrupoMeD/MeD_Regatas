@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+     
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.use_sql_comments">true</property> 
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
+
+        <mapping class="es.udc.fic.medregatas.model.tipo.Tipo"/>
+        <mapping class="es.udc.fic.medregatas.model.inscripcion.Inscripcion"/>
+        <mapping class="es.udc.fic.medregatas.model.regata.Regata"/>
+        <mapping class="es.udc.fic.medregatas.model.posicion.Posicion"/>
+        <mapping class="es.udc.fic.medregatas.model.manga.Manga"/>
+        <mapping class="es.udc.fic.medregatas.model.barco.Barco"/>
+    </session-factory>
+</hibernate-configuration>

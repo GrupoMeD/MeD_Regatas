@@ -1,0 +1,97 @@
+-- SENTENCES TO CREATE REGATAS'S TABLE'S
+
+DROP TABLE IF EXISTS Posicion;
+DROP TABLE IF EXISTS Manga;
+DROP TABLE IF EXISTS Inscripcion;
+DROP TABLE IF EXISTS Barco;
+DROP TABLE IF EXISTS Regata;
+DROP TABLE IF EXISTS Tipo;
+
+
+
+CREATE TABLE Regata(
+	idRegata BIGINT NOT NULL AUTO_INCREMENT,
+	nombre VARCHAR(30) NOT NULL,
+	descripcion VARCHAR(200),
+	CONSTRAINT idRegata_PK PRIMARY KEY(idRegata)
+)ENGINE = InnoDB;
+
+CREATE INDEX RegataIndexByIdRegata ON Regata (idRegata);
+
+CREATE TABLE Tipo(
+	idTipo BIGINT NOT NULL AUTO_INCREMENT,
+	nombre VARCHAR(30) NOT NULL,
+	descripcion VARCHAR(30),
+	compiteTmpReal BOOLEAN NOT NULL,
+	CONSTRAINT idTipo_PK PRIMARY KEY (idTipo)
+)ENGINE = InnoDB;
+
+CREATE INDEX TipoIndexByIdTipo ON Tipo(idTipo);
+
+CREATE TABLE Barco(
+	idBarco BIGINT NOT NULL AUTO_INCREMENT,
+	vela INTEGER NOT NULL,
+	nombre VARCHAR(50) NOT NULL,
+	idTipo BIGINT NOT NULL,
+	gph FLOAT,
+	modelo VARCHAR(30),
+	CONSTRAINT idBarco_PK PRIMARY KEY (idBarco),
+	CONSTRAINT idTipo_FKT FOREIGN KEY(idTipo)
+	REFERENCES Tipo(idTipo) ON DELETE CASCADE
+)ENGINE = InnoDB;
+
+CREATE INDEX BarcoIndexByIdBarco ON Barco(idBarco);
+
+
+
+
+CREATE TABLE Inscripcion(
+	idInscripcion BIGINT NOT NULL AUTO_INCREMENT,
+	idRegata BIGINT NOT NULL,
+	idBarco BIGINT NOT NULL,
+        patron VARCHAR(30) NOT NULL,
+	CONSTRAINT idInscripcion_PK PRIMARY KEY (idInscripcion),
+	CONSTRAINT idRegata_FKR FOREIGN KEY(idRegata) REFERENCES Regata(idRegata)ON DELETE CASCADE,
+	CONSTRAINT idBarco_FKB FOREIGN KEY(idBarco) REFERENCES Barco(idBarco) ON DELETE CASCADE
+
+)ENGINE = InnoDB;
+
+CREATE INDEX InscripcionIndexByIdInscripcion ON Inscripcion(idInscripcion);
+
+
+CREATE TABLE Manga(
+	idManga BIGINT NOT NULL AUTO_INCREMENT,
+    fecha TIMESTAMP NOT NULL,
+    millas BIGINT NOT NULL,
+    idRegata BIGINT NOT NULL,
+	CONSTRAINT idManga_PK PRIMARY KEY (idManga),
+	CONSTRAINT idRegata_FKRM FOREIGN KEY(idRegata)
+    REFERENCES Regata(idRegata) ON DELETE CASCADE
+)ENGINE = InnoDB;
+
+
+CREATE INDEX MangaIndexByIdManga ON Manga(idManga);
+
+
+CREATE TABLE Posicion(
+    idPosicion BIGINT NOT NULL AUTO_INCREMENT,
+    segTiempo BIGINT,
+    penal INTEGER NOT NULL,
+    idManga BIGINT NOT NULL,
+    idBarco BIGINT NOT NULL,
+    puntos INTEGER,
+    segPenalizacion BIGINT,
+	CONSTRAINT idPosicion_PK PRIMARY KEY (idPosicion),
+	CONSTRAINT idBarco_FK FOREIGN KEY(idBarco)
+    REFERENCES Barco(idBarco) ON DELETE CASCADE,
+	CONSTRAINT idManga_FK FOREIGN KEY(idManga)
+    REFERENCES Manga(idManga) ON DELETE CASCADE
+)ENGINE = InnoDB;
+
+CREATE INDEX PosicionIndexByIdPoscion ON Posicion(idPosicion);
+
+
+
+
+
+
